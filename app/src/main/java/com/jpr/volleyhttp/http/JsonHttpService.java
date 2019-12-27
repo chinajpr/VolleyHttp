@@ -70,7 +70,7 @@ public class JsonHttpService implements IHttpService {
             int code = response.getStatusLine().getStatusCode();
             if (code == 200) {
                 httpListener.onSSuccess(response.getEntity());
-                Log.d("jiao" , "json返回----->" + response.getEntity());
+//                Log.d("jiao" , "json返回----->" + response.getEntity());
             } else {
                 httpListener.onFail();
             }

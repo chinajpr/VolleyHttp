@@ -12,6 +12,8 @@ import com.jpr.volleyhttp.http.interfaces.IDataListener;
 public class MainActivity extends AppCompatActivity {
     String url = "http://apis.juhe.cn/cook/query.php";
 
+    int n = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,18 +25,22 @@ public class MainActivity extends AppCompatActivity {
         User user = new User();
 
         for (int i = 0; i < 50; i++) {
-            Log.d("jiao" , "i ===" + i);
+            Log.d("jiao", "i ===" + i);
             Volley.sendRequest(user, url, LoginResponse.class, new IDataListener<LoginResponse>() {
 
 
                 @Override
                 public void onSuccess(LoginResponse loginResponse) {
-                    Log.i("jiao", loginResponse.toString());
+                    Log.i("jiao", "获取成功：" + loginResponse.toString());
+                    n++;
+                    Log.d("jiao", n + "--------");
                 }
 
                 @Override
                 public void onFail() {
                     Log.d("jiao", "获取失败");
+                    n++;
+                    Log.d("jiao", n + "++++++++++++");
                 }
             });
         }

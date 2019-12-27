@@ -3,7 +3,9 @@ package com.jpr.volleyhttp.http;
 import android.util.Log;
 
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -22,7 +24,8 @@ public class ThreadPoolManager {
     /**
      * 阻塞式队列
      */
-    private LinkedBlockingQueue<Future<?>> taskQueue = new LinkedBlockingQueue<>();
+//    private LinkedBlockingQueue<Future<?>> taskQueue = new LinkedBlockingQueue<>();
+    private BlockingQueue<Future<?>> taskQueue = new ArrayBlockingQueue<>(4);
     private ThreadPoolExecutor threadPoolExecutor;
 
     /**
@@ -34,6 +37,7 @@ public class ThreadPoolManager {
         return instance;
     }
 
+    int i = 0;
     /**
      * 线程池的拒绝策略
      */
@@ -41,8 +45,14 @@ public class ThreadPoolManager {
         @Override
         public void rejectedExecution(Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
             try {
+//                Log.d("jiaopeirong" , taskQueue.size() + "----------------");
                 taskQueue.put(new FutureTask<Object>(runnable, null));
-            } catch (InterruptedException e) {
+//                i++;
+//                Log.d("jiaopeirong" ,  "---------" + i);
+//                Log.d("jiaopeirong" , taskQueue.size() + "++++++++++++++++++++");
+
+//                new Thread(runnable,"新线程:"+new Random().nextInt(10)).start();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
